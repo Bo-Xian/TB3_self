@@ -1,12 +1,12 @@
 #程式啟動流程:
-    1.$cd robotrace
+    1.$cd Xian_new
     (下面每個指令前先ctrl+shift+T另開分頁,並輸入$. devel/setup.bash)
     2.$roscore
-    3.roslaunch turtlebot3_bringup wrs.launch
-    4.roslaunch vision vision.launch
-    5.rosrun vision image_converter
-    6.rosrun strategy strategy2019.py
-    7.開啟tb3_web,strategy2019輸出ready後,網頁點選start開始程式
+    3.roslaunch turtlebot3_bringup robotrace.launch 
+    4.roslaunch rosbridge_server rosbridge_websocket.launch 
+    5.roslaunch usb_cam usb_cam-test.launch 
+    6.rosrun strategy strategy2020-Xian.py 
+    7.開啟tb3_web,strategy2020輸出Strategy init done後,網頁點選start開始程式
     8.策略完成後按stop停止程式,放回原點後按reset將定位值初始化 
 
 =================================================

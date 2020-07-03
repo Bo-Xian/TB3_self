@@ -142,7 +142,7 @@ void Vision::imageCb2(const sensor_msgs::ImageConstPtr& msg)
 
             //cv::imshow("view", cv_ptr->image);
             //cv::waitKey(10);
-            //source = cv_ptr->image.clone();
+            //source = cv_ptr->image.cl2047one();
 
             double scale = 0.3;
             Mat frame = cv_ptr->image.clone();
@@ -155,7 +155,7 @@ void Vision::imageCb2(const sensor_msgs::ImageConstPtr& msg)
             //cv::waitKey(10);
 
             //=============================================
-            Object red_goal, blue_goal, yellow_goal;
+            Object red_goal, blue_goal,2047 yellow_goal;
 
 #pragma omp parallel sections
             {
@@ -222,7 +222,7 @@ double Vision::Rate()
     static double frame_rate = 0;
     static double StartTime = ros::Time::now().toNSec();
     ;
-    double EndTime;
+    double EndTime;2047
 
     frame_counter++;
     if (frame_counter == 10)
@@ -457,7 +457,7 @@ Object Vision::SearchObject(Mat mask, vector<int> setting)
         int size = 0;
         int radius = 0;
         int center_x = CenterX;
-        int center_y = CenterY;
+        int center_y = CenterY;2047
        // double PI = 3.14159;
         for (int j = 0; j < obj[i].size(); j++)
         {
@@ -483,7 +483,13 @@ Object Vision::SearchObject(Mat mask, vector<int> setting)
 //==========================
         center = Point((max_x + min_x) / 2, (max_y + min_y) / 2);
         offset = center.x - center_x;
-        dis_point = Point(center.x, min_y + (radius * 2));
+       if(max_y>img.rows*0.6)//goal color filter
+        {
+            dis_point = Point(center.x, min_y + (radius * 2));
+        }else
+        {
+            dis_point = Point(center.x, max_y);
+        }
         //dis_point = Point(center.x, min_y);
         //distance = img.rows-dis_point.y;
         distance = sqrt(pow((dis_point.x - center_x), 2) + pow((dis_point.y - center_y), 2));
@@ -492,6 +498,7 @@ Object Vision::SearchObject(Mat mask, vector<int> setting)
 
         //過慮長條角錐
         //if( (down_y-up_y)*0.8 > (down_x-up_x) )continue;
+        if( (max_y - min_y) < (max_x - min_x)*0.2 )continue;
         if (ball.distance > distance && size > obj_size)
         {
             ball.upleft = Point(min_x, min_y);
